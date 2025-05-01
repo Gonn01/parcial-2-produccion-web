@@ -31,7 +31,7 @@ try {
     $stmt->bind_param("ssss", $nombre, $email, $hash, $rol);
 
     if ($stmt->execute()) {
-        header("Location: ../listado/usuarios.php");
+        header("Location: ../views/listado_usuarios.php");
     } else {
         throw new Exception("Error al insertar usuario: " . $stmt->error);
     }
@@ -39,5 +39,5 @@ try {
 } catch (Exception $e) {
     echo "<h3>❌ Error al registrar usuario</h3>";
     echo "<p>{$e->getMessage()}</p>";
-    echo "<a href='../forms/registro.php'>Volver al formulario</a>";
+    echo "<a href='../views/registro.php'>Volver al formulario</a>";
 }

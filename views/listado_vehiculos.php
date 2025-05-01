@@ -1,11 +1,12 @@
 <?php
-require_once '../config.php';
-require_once '../clases/Vehiculo.php';
+require_once '../models/config.php';
+require_once '../models/Vehiculo.php';
 
 if (!isset($_SESSION['usuario'])) {
     header('Location: ../index.php');
     exit;
 }
+$rol = $_SESSION['usuario']['rol'];
 
 $vehiculo = new Vehiculo("", "", 0, 0);
 $resultado = $vehiculo->listar();
@@ -20,10 +21,10 @@ $resultado = $vehiculo->listar();
 </head>
 <body class="container mt-5">
     <h2>Listado de Vehículos</h2>
-    <p>Usuario: <strong><?php echo $_SESSION['usuario']['nombre']; ?></strong> | 
-       <a href="../logout.php" class="btn btn-danger btn-sm">Cerrar sesión</a></p>
+        <?php if ($rol === 'admin') : ?>
+            <a href="alta_vehiculo.php" class="btn btn-success mb-3">Agregar Vehículo</a>
+        <?php endif; ?>
     
-    <a href="../forms/alta_vehiculo.php" class="btn btn-success mb-3">Agregar Vehículo</a>
 
     <table class="table table-striped">
         <thead>
@@ -45,7 +46,7 @@ $resultado = $vehiculo->listar();
         <?php } ?>
         </tbody>
     </table><div class="text-center mt-4">
-  <a href="../dashboard.php" class="btn btn-primary">Volver al Panel</a>
+  <a href="dashboard.php" class="btn btn-primary">Volver al Panel</a>
 </div>
 
 </body>

@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once '../models/config.php';
 
 if (!isset($_SESSION['usuario'])) {
     header('Location: index.php');
@@ -23,15 +23,10 @@ $rol = $_SESSION['usuario']['rol'];
 
     <div class="d-grid gap-2 col-6 mx-auto">
 
-        <a href="listado/vehiculos.php" class="btn btn-primary">Ver Vehículos</a>
+        <a href="listado_vehiculos.php" class="btn btn-primary">Ver Vehículos</a>
+        <a href="listado_usuarios.php" class="btn btn-secondary">Ver Usuarios</a>
 
-        <?php if ($rol === 'admin') : ?>
-            <a href="forms/alta_vehiculo.php" class="btn btn-success">Agregar Vehículo</a>
-            <a href="forms/registro.php" class="btn btn-warning">Registrar Nuevo Usuario</a>
-            <a href="listado/usuarios.php" class="btn btn-secondary">Ver Usuarios</a>
-        <?php endif; ?>
-
-        <a href="logout.php" class="btn btn-danger mt-3">Cerrar sesión</a>
+        <a href="../acciones/logout.php" class="btn btn-danger mt-3">Cerrar sesión</a>
     </div>
 </body>
 </html>

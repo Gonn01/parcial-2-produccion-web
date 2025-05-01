@@ -1,11 +1,11 @@
 <?php
-require_once '../config.php';
+require_once '../models/config.php';
 
 if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['rol'] !== 'admin') {
     echo "Acceso denegado.";
     exit;
 }
-
+$rol = $_SESSION['usuario']['rol'];
 $db = BaseDatos::conectar();
 $result = $db->query("SELECT nombre, email, rol FROM usuarios");
 ?>
@@ -19,7 +19,10 @@ $result = $db->query("SELECT nombre, email, rol FROM usuarios");
 </head>
 <body class="container mt-5">
     <h2>Usuarios Registrados</h2>
-    <a href="../forms/alta_usuario.php" class="btn btn-success mb-3">Crear nuevo usuario</a>
+        <?php if ($rol === 'admin') : ?>
+            <a href="../views/alta_usuario.php" class="btn btn-success mb-3">Crear nuevo usuario</a>
+        <?php endif; ?>
+
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -39,7 +42,7 @@ $result = $db->query("SELECT nombre, email, rol FROM usuarios");
         </tbody>
     </table>
     <div class="text-center mt-4">
-  <a href="../dashboard.php" class="btn btn-primary">Volver al Panel</a>
+  <a href="dashboard.php" class="btn btn-primary">Volver al Panel</a>
 </div>
 
 </body>

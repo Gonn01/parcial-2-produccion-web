@@ -1,7 +1,7 @@
 <?php
-require_once '../config.php';
-require_once '../clases/Empleado.php';
-require_once '../clases/Administrador.php';
+require_once '../models/config.php';
+require_once '../models/Empleado.php';
+require_once '../models/Administrador.php';
 
 try {
     // Verificar si llegaron datos del form
@@ -52,7 +52,7 @@ try {
         'rol' => $objUsuario->getRol()
     ];
 
-    header('Location: ../dashboard.php');
+    header('Location: ../views/dashboard.php');
 
     exit;
 

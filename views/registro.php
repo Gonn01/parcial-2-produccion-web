@@ -37,7 +37,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['rol'] !== 'admin') {
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Registrar</button>
-        <a href="../listado/usuarios.php" class="btn btn-secondary ms-2">Ver usuarios</a>
+        <a href="../views/listado_usuarios.php" class="btn btn-secondary ms-2">Ver usuarios</a>
     </form>
 </body>
 </html>

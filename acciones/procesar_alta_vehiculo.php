@@ -16,7 +16,7 @@ $stmt = $db->prepare("INSERT INTO vehiculos (marca, modelo, anio, precio) VALUES
 $stmt->bind_param("sssd", $marca, $modelo, $anio, $precio);
 
 if ($stmt->execute()) {
-    header("Location: ../listado/vehiculos.php");
+    header("Location: ../views/listado_vehiculos.php");
 } else {
     echo "Error al guardar el vehículo.";
 }

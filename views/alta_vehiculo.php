@@ -1,5 +1,5 @@
 <?php
-require_once '../config.php';
+require_once '../models/config.php';
 
 if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['rol'] !== 'admin') {
     echo "Acceso denegado.";
@@ -34,7 +34,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['rol'] !== 'admin') {
             <input type="number" step="0.01" name="precio" class="form-control" required>
         </div>
         <button type="submit" class="btn btn-success">Guardar vehículo</button>
-        <a href="../listado/vehiculos.php" class="btn btn-secondary ms-2">Volver</a>
+        <a href="../views/listado_vehiculos.php" class="btn btn-secondary ms-2">Volver</a>
     </form>
 </body>
 </html>

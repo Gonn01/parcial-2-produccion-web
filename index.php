@@ -1,8 +1,8 @@
 <?php
-require_once 'config.php';
+require_once './models/config.php';
 
 if (isset($_SESSION['usuario'])) {
-    header('Location: listado/vehiculos.php');
+    header('Location: ../views/listado_vehiculos.php');
     exit;
 }
 ?>
