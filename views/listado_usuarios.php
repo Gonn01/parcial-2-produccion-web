@@ -53,8 +53,7 @@ try {
                     <td><?= $u instanceof Administrador ? 'administrador' : 'Empleado' ?></td>
                     <?php if ($rol === 'admin' && $email !== $u->getEmail()): ?>
                         <td>
-                            <a href="../acciones/eliminar_usuario.php?id=<?= $u->getId() ?>" class="btn btn-danger btn-sm"
-                                onclick="return confirm('¿Estás seguro de que querés eliminar este usuario?')">
+                            <a href="../acciones/eliminar_usuario.php?id=<?= $u->getId() ?>" class="btn btn-danger btn-sm">
                                 Eliminar
                             </a>
                         </td>

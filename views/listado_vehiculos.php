@@ -52,8 +52,7 @@ try {
                     <td>$<?= number_format($v->getPrecio(), 2, ',', '.') ?></td>
                     <?php if ($rol === 'admin'): ?>
                         <td>
-                            <a href="../acciones/eliminar_vehiculo.php?id=<?= $v->getId() ?>" class="btn btn-danger btn-sm"
-                                onclick="return confirm('¿Estás seguro de que querés eliminar este vehículo?')">
+                            <a href="../acciones/eliminar_vehiculo.php?id=<?= $v->getId() ?>" class="btn btn-danger btn-sm">
                                 Eliminar
                             </a>
                         </td>
