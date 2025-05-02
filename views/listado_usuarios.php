@@ -6,22 +6,25 @@ if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['rol'] !== 'admin') {
     exit;
 }
 $rol = $_SESSION['usuario']['rol'];
+$email = $_SESSION['usuario']['email'];
 $db = BaseDatos::conectar();
-$result = $db->query("SELECT nombre, email, rol FROM usuarios");
+$result = $db->query("SELECT id, nombre, email, rol FROM usuarios");
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Listado de Usuarios</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body class="container mt-5">
     <h2>Usuarios Registrados</h2>
-        <?php if ($rol === 'admin') : ?>
-            <a href="../views/alta_usuario.php" class="btn btn-success mb-3">Crear nuevo usuario</a>
-        <?php endif; ?>
+    <?php if ($rol === 'admin'): ?>
+        <a href="../views/alta_usuario.php" class="btn btn-success mb-3">Crear nuevo usuario</a>
+    <?php endif; ?>
 
     <table class="table table-bordered">
         <thead>
@@ -29,21 +32,36 @@ $result = $db->query("SELECT nombre, email, rol FROM usuarios");
                 <th>Nombre</th>
                 <th>Email</th>
                 <th>Rol</th>
+                <?php if ($rol === 'admin'): ?>
+                    <th>Acciones</th>
+                <?php endif; ?>
+
             </tr>
         </thead>
         <tbody>
-        <?php while ($row = $result->fetch_assoc()) { ?>
-            <tr>
-                <td><?= $row['nombre'] ?></td>
-                <td><?= $row['email'] ?></td>
-                <td><?= ucfirst($row['rol']) ?></td>
-            </tr>
-        <?php } ?>
+            <?php while ($row = $result->fetch_assoc()) { ?>
+                <tr>
+                    <td><?= $row['nombre'] ?></td>
+                    <td><?= $row['email'] ?></td>
+                    <td><?= ucfirst($row['rol']) ?></td>
+                    <?php if ($rol === 'admin' && $email !== $row['email']): ?>
+                        <td>
+                            <a href="../acciones/eliminar_usuario.php?id=<?= urlencode($row['id']) ?>"
+                                class="btn btn-danger btn-sm"
+                                onclick="return confirm('¿Estás seguro de que querés eliminar este usuario?')">
+                                Eliminar
+                            </a>
+                        </td>
+                    <?php endif; ?>
+
+                </tr>
+            <?php } ?>
         </tbody>
     </table>
     <div class="text-center mt-4">
-  <a href="dashboard.php" class="btn btn-primary">Volver al Panel</a>
-</div>
+        <a href="dashboard.php" class="btn btn-primary">Volver al Panel</a>
+    </div>
 
 </body>
+
 </html>

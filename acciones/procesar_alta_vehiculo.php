@@ -1,5 +1,5 @@
 <?php
-require_once '../config.php';
+require_once '../models/config.php';
 
 if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['rol'] !== 'admin') {
     echo "Acceso denegado.";
