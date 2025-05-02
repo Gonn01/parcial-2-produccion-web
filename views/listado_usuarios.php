@@ -1,7 +1,5 @@
 <?php
 require_once '../models/config.php';
-require_once '../models/Usuario.php';
-require_once '../models/Empleado.php';
 require_once '../models/Administrador.php';
 require_once '../models/UsuarioRepository.php';
 

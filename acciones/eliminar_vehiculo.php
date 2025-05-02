@@ -21,4 +21,3 @@ try {
 } catch (\Throwable $th) {
     new Exception("Error al eliminar el vehículo: " . $th->getMessage());
 }
-exit;
