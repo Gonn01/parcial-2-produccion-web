@@ -13,7 +13,13 @@ if (!isset($_GET['id'])) {
 }
 
 $id = intval($_GET['id']);
-Usuario::eliminar($id);
 
-header('Location: ../views/listado_usuarios.php');
+try {
+    Usuario::eliminar($id);
+
+    header('Location: ../views/listado_usuarios.php');
+} catch (\Throwable $th) {
+    new Exception("Error al eliminar el vehículo: " . $th->getMessage());
+}
+
 exit;

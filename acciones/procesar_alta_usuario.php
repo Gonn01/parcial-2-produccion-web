@@ -11,12 +11,15 @@ $email = $_POST['email'];
 $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 $rol = $_POST['rol'];
 
-$db = BaseDatos::conectar();
-$stmt = $db->prepare("INSERT INTO usuarios (nombre, email, password, rol) VALUES (?, ?, ?, ?)");
-$stmt->bind_param("ssss", $nombre, $email, $password, $rol);
-
-if ($stmt->execute()) {
+try {
+    $conn = BaseDatos::conectar();
+    $stmt = $conn->prepare("INSERT INTO usuarios (nombre, email, password, rol) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $nombre, $email, $password, $rol);
+    $stmt->execute();
     header("Location: ../views/listado_usuarios.php");
-} else {
-    echo "Error al crear el usuario.";
+} catch (Throwable $th) {
+    new Exception("Error al dar de alta un usuario: " . $th->getMessage());
+} finally {
+    $stmt->close();
+    $conn->close();
 }

@@ -1,14 +1,24 @@
 <?php
 require_once '../models/config.php';
+require_once '../models/Usuario.php';
+require_once '../models/Empleado.php';
+require_once '../models/Administrador.php';
+require_once '../models/UsuarioRepository.php';
 
 if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['rol'] !== 'admin') {
     echo "Acceso denegado.";
     exit;
 }
+
 $rol = $_SESSION['usuario']['rol'];
 $email = $_SESSION['usuario']['email'];
-$db = BaseDatos::conectar();
-$result = $db->query("SELECT id, nombre, email, rol FROM usuarios");
+$usuarios = [];
+
+try {
+    $usuarios = RepositorioUsuario::listar();
+} catch (\Throwable $th) {
+    echo "Error al listar usuarios: " . $th->getMessage();
+}
 ?>
 
 <!DOCTYPE html>
@@ -35,33 +45,30 @@ $result = $db->query("SELECT id, nombre, email, rol FROM usuarios");
                 <?php if ($rol === 'admin'): ?>
                     <th>Acciones</th>
                 <?php endif; ?>
-
             </tr>
         </thead>
         <tbody>
-            <?php while ($row = $result->fetch_assoc()) { ?>
+            <?php foreach ($usuarios as $u): ?>
                 <tr>
-                    <td><?= $row['nombre'] ?></td>
-                    <td><?= $row['email'] ?></td>
-                    <td><?= ucfirst($row['rol']) ?></td>
-                    <?php if ($rol === 'admin' && $email !== $row['email']): ?>
+                    <td><?= htmlspecialchars($u->getNombre()) ?></td>
+                    <td><?= htmlspecialchars($u->getEmail()) ?></td>
+                    <td><?= $u instanceof Administrador ? 'administrador' : 'Empleado' ?></td>
+                    <?php if ($rol === 'admin' && $email !== $u->getEmail()): ?>
                         <td>
-                            <a href="../acciones/eliminar_usuario.php?id=<?= urlencode($row['id']) ?>"
-                                class="btn btn-danger btn-sm"
+                            <a href="../acciones/eliminar_usuario.php?id=<?= $u->getId() ?>" class="btn btn-danger btn-sm"
                                 onclick="return confirm('¿Estás seguro de que querés eliminar este usuario?')">
                                 Eliminar
                             </a>
                         </td>
                     <?php endif; ?>
-
                 </tr>
-            <?php } ?>
+            <?php endforeach; ?>
         </tbody>
     </table>
+
     <div class="text-center mt-4">
         <a href="dashboard.php" class="btn btn-primary">Volver al Panel</a>
     </div>
-
 </body>
 
 </html>

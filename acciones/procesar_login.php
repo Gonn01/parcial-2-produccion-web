@@ -6,12 +6,13 @@ require_once '../models/Administrador.php';
 try {
     $email = $_POST['email'];
     $password = $_POST['password'];
+
     if (!isset($email) || !isset($password) || empty($email) || empty($password)) {
         throw new Exception("Email o contraseña vacíos.");
     }
 
-    $db = BaseDatos::conectar();
-    $stmt = $db->prepare("SELECT * FROM usuarios WHERE email = ?");
+    $conn = BaseDatos::conectar();
+    $stmt = $conn->prepare("SELECT * FROM usuarios WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $resultado = $stmt->get_result();
@@ -26,10 +27,9 @@ try {
         throw new Exception("Contraseña incorrecta.");
     }
 
-    $objUsuario = $usuario['rol'] === 'admin' ?
-        new Administrador($usuario['nombre'], $usuario['email'], $usuario['password'], $usuario['rol'])
-        :
-        $objUsuario = new Empleado($usuario['nombre'], $usuario['email'], $usuario['password'], $usuario['rol']);
+    $objUsuario = $usuario['rol'] === 'admin'
+        ? new Administrador($usuario['id'], $usuario['nombre'], $usuario['email'], $usuario['password'], $usuario['rol'])
+        : new Empleado($usuario['id'], $usuario['nombre'], $usuario['email'], $usuario['password'], $usuario['rol']);
 
     $_SESSION['usuario'] = [
         'nombre' => $objUsuario->getNombre(),
@@ -38,12 +38,11 @@ try {
     ];
 
     header('Location: ../views/dashboard.php');
-
     exit;
 
 } catch (Exception $e) {
-    // Mostrar el error
-    echo "<h3>❌ Error durante el login</h3>";
-    echo "<p>{$e->getMessage()}</p>";
-    echo "<p><a href='../index.php'>Volver al login</a></p>";
+    new Exception("Error en login: " . $th->getMessage());
+} finally {
+    $stmt->close();
+    $conn->close();
 }

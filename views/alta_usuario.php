@@ -9,11 +9,13 @@ if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['rol'] !== 'admin') {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Alta de Usuario</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body class="container mt-5">
     <h2>Alta de Usuario</h2>
     <form action="../acciones/procesar_alta_usuario.php" method="POST" class="mt-4">
@@ -40,4 +42,5 @@ if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['rol'] !== 'admin') {
         <a href="../views/listado_usuarios.php" class="btn btn-secondary ms-2">Volver</a>
     </form>
 </body>
+
 </html>

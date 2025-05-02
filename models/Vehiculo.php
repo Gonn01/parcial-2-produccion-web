@@ -78,7 +78,7 @@ class Vehiculo implements Eliminable
             $stmt->bind_param("i", $id);
             $stmt->execute();
         } catch (\Throwable $th) {
-            echo "Error al eliminar el vehículo: " . $th->getMessage();
+            throw new Exception("Error al eliminar el vehículo: " . $th->getMessage());
         } finally {
             $stmt->close();
             $conn->close();

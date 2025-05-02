@@ -7,8 +7,13 @@ if (!isset($_SESSION['usuario'])) {
     exit;
 }
 $rol = $_SESSION['usuario']['rol'];
+$vehiculos = [];
 
-$vehiculos = Vehiculo::listar(); // ahora es un array de objetos
+try {
+    $vehiculos = Vehiculo::listar();
+} catch (\Throwable $th) {
+    echo "Error al listar vehículos: " . $th->getMessage();
+}
 ?>
 
 <!DOCTYPE html>
