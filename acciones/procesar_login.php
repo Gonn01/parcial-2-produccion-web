@@ -40,7 +40,7 @@ try {
     header('Location: ../views/dashboard.php');
     exit;
 
-} catch (Exception $e) {
+} catch (Exception $th) {
     new Exception("Error en login: " . $th->getMessage());
 } finally {
     $stmt->close();

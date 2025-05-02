@@ -2,7 +2,7 @@
 require_once './models/config.php';
 
 if (isset($_SESSION['usuario'])) {
-    header('Location: ../views/listado_vehiculos.php');
+    header('Location: ../views/dashboard.php');
     exit;
 }
 ?>
