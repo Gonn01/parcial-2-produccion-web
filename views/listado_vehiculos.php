@@ -40,6 +40,7 @@ try {
                 <th>Precio</th>
                 <?php if ($rol === 'admin'): ?>
                     <th>Acciones</th>
+                    <th>Editar</th>
                 <?php endif; ?>
             </tr>
         </thead>
@@ -54,6 +55,11 @@ try {
                         <td>
                             <a href="../acciones/eliminar_vehiculo.php?id=<?= $v->getId() ?>" class="btn btn-danger btn-sm">
                                 Eliminar
+                            </a>
+                        </td>
+                        <td>
+                            <a href="../views/editar_vehiculo.php?id=<?= $v->getId() ?>" class="btn btn-primary btn-sm">
+                                Editar
                             </a>
                         </td>
                     <?php endif; ?>
